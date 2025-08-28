@@ -11,15 +11,15 @@
 <style>
   :root {
     --bg-gradient-light: linear-gradient(135deg, #f5f7fa, #e5e9f0);
-    --bg-gradient-dark: linear-gradient(135deg, #1e1e2f, #131325);
+    --bg-gradient-dark: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     --text-light: #f1f1f1;
     --text-dark: #333;
-    --primary-color: #3498db;
-    --primary-dark: #2980b9;
+    --primary-color: #f9e559;
+    --primary-dark: #e6d14a;
     --card-light: rgba(255, 255, 255, 0.8);
     --card-dark: rgba(30, 30, 47, 0.7);
-    --accent-color: #3498db;
-    --accent-hover: #2980b9;
+    --accent-color: #f9e559;
+    --accent-hover: #e6d14a;
     --shadow-light: 0 8px 25px rgba(0, 0, 0, 0.1);
     --shadow-dark: 0 8px 25px rgba(0, 0, 0, 0.3);
   }
@@ -37,6 +37,34 @@
     min-height: 100vh;
     background: var(--bg-gradient-dark);
     line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Stars background for dark mode */
+  body.dark::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+      radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+      radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+    background-size: 200px 100px;
+    background-repeat: repeat;
+    opacity: 0.3;
+    z-index: -1;
+    animation: sparkle 3s linear infinite;
+  }
+
+  @keyframes sparkle {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px); }
   }
 
   body.light {
@@ -51,16 +79,11 @@
     text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
   }
 
-  body.dark {
-    background: var(--bg-gradient-dark);
-    color: var(--text-light);
-  }
-  
   body.dark h1,
   body.dark h2,
   body.dark h3 {
     color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 10px rgba(249, 229, 89, 0.5);
     letter-spacing: 0.5px;
   }
 
@@ -104,6 +127,10 @@
   .logo h1 {
     font-size: 1.8rem;
     margin: 0;
+    background: linear-gradient(to right, #f9e559, #6a82fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   nav ul {
@@ -127,6 +154,7 @@
 
   nav a:hover {
     color: var(--primary-color);
+    text-shadow: 0 0 8px rgba(249, 229, 89, 0.7);
   }
 
   nav a::after {
@@ -138,6 +166,7 @@
     height: 2px;
     background: var(--primary-color);
     transition: width 0.3s ease;
+    box-shadow: 0 0 5px var(--primary-color);
   }
 
   nav a:hover::after {
@@ -189,13 +218,14 @@
   }
   
   .lang-btn.active {
-    background-color: #3498db;
-    color: white;
+    background-color: #f9e559;
+    color: #000;
+    box-shadow: 0 0 8px rgba(249, 229, 89, 0.5);
   }
   
   body.light .lang-btn.active {
-    background-color: #2980b9;
-    color: white;
+    background-color: #f9e559;
+    color: #000;
   }
   
   .lang-btn:hover:not(.active) {
@@ -258,7 +288,8 @@
   }
 
   input:checked + .slider {
-    background: rgba(52, 152, 219, 0.5);
+    background: rgba(249, 229, 89, 0.5);
+    box-shadow: 0 0 8px rgba(249, 229, 89, 0.5);
   }
 
   input:checked + .slider:before {
@@ -272,15 +303,38 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 100px 20px;
-    background: linear-gradient(135deg, rgba(26, 41, 128, 0.9), rgba(38, 208, 206, 0.8));
+    padding: 150px 20px;
+    background: linear-gradient(135deg, rgba(15, 12, 41, 0.9), rgba(48, 43, 99, 0.8), rgba(36, 36, 62, 0.9));
     color: white;
     position: relative;
     overflow: hidden;
   }
 
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(3px 3px at 50px 50px, #f9e559, transparent),
+      radial-gradient(2px 2px at 150px 100px, rgba(249, 229, 89, 0.8), transparent),
+      radial-gradient(1px 1px at 250px 70px, #fff, transparent),
+      radial-gradient(2px 2px at 350px 150px, rgba(249, 229, 89, 0.6), transparent);
+    background-size: 400px 200px;
+    background-repeat: repeat;
+    opacity: 0.4;
+    animation: twinkle 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.2; }
+    100% { opacity: 0.6; }
+  }
+
   body.light .hero {
-    background: linear-gradient(135deg, rgba(38, 208, 206, 0.8), rgba(26, 41, 128, 0.6));
+    background: linear-gradient(135deg, rgba(106, 130, 251, 0.8), rgba(249, 229, 89, 0.6));
     color: var(--text-light);
   }
   
@@ -290,18 +344,31 @@
     align-items: center;
     justify-content: center;
     max-width: 800px;
+    position: relative;
+    z-index: 2;
   }
 
   .hero h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 15px rgba(249, 229, 89, 0.7);
+    background: linear-gradient(to right, #f9e559, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 5px rgba(249, 229, 89, 0.5); }
+    to { text-shadow: 0 0 20px rgba(249, 229, 89, 0.8), 0 0 30px rgba(249, 229, 89, 0.6); }
   }
 
   .hero p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     max-width: 800px;
     margin-bottom: 30px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
   
   .button-container {
@@ -314,8 +381,8 @@
   .btn {
     display: inline-block;
     background: var(--primary-color);
-    color: white;
-    padding: 12px 30px;
+    color: #000;
+    padding: 15px 40px;
     border-radius: 30px;
     text-decoration: none;
     font-weight: 600;
@@ -323,17 +390,37 @@
     border: none;
     cursor: pointer;
     margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(249, 229, 89, 0.4);
+    position: relative;
+    overflow: hidden;
   }
 
   .btn:hover {
     background: var(--primary-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(249, 229, 89, 0.6);
+  }
+
+  .btn::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20px;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(30deg);
+    transition: all 0.6s;
+  }
+
+  .btn:hover::after {
+    left: 120%;
   }
 
   /* Sections */
   .section {
-    padding: 80px 0;
+    padding: 100px 0;
+    position: relative;
   }
 
   .section-header {
@@ -345,9 +432,24 @@
   }
 
   .section-header h2 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     margin-bottom: 15px;
     text-align: center;
+    position: relative;
+    display: inline-block;
+  }
+
+  .section-header h2::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 3px;
+    box-shadow: 0 0 10px var(--primary-color);
   }
 
   .section-header p {
@@ -355,6 +457,7 @@
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
+    font-size: 1.1rem;
   }
 
   body.light .section-header p {
@@ -378,6 +481,24 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(249, 229, 89, 0.2);
+  }
+
+  .app-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .app-card:hover::before {
+    opacity: 1;
   }
 
   body.light .app-card {
@@ -413,6 +534,18 @@
     font-size: 1.5rem;
     margin-bottom: 15px;
     color: #fff;
+    position: relative;
+    display: inline-block;
+  }
+
+  .app-content h3::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: var(--primary-color);
   }
 
   body.light .app-content h3 {
@@ -433,10 +566,23 @@
 
   .feature-item {
     text-align: center;
-    padding: 30px;
+    padding: 40px 30px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(249, 229, 89, 0.1);
+  }
+
+  .feature-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
   }
 
   body.light .feature-item {
@@ -446,12 +592,14 @@
   .feature-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: rgba(249, 229, 89, 0.3);
   }
 
   .feature-icon {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 20px;
     color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(249, 229, 89, 0.5);
   }
 
   /* About section */
@@ -468,6 +616,8 @@
     text-align: center;
     margin-bottom: 20px;
     max-width: 800px;
+    font-size: 1.1rem;
+    line-height: 1.8;
   }
 
   /* Contact section */
@@ -476,11 +626,12 @@
     margin: 0 auto;
     text-align: center;
     background: rgba(255, 255, 255, 0.05);
-    padding: 30px;
+    padding: 40px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 1px solid rgba(249, 229, 89, 0.1);
   }
   
   .contact-info p {
@@ -514,18 +665,24 @@
   #app-ads-link {
     color: var(--text-light);
     text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  #app-ads-link:hover {
+    color: var(--primary-color);
+    text-shadow: 0 0 8px rgba(249, 229, 89, 0.7);
   }
 
   body.light #app-ads-link {
     color: var(--text-dark);
   }
 
-  /* Cloud animation */
+  /* Cloud animation - enhanced with cosmic theme */
   .cloud {
     position: fixed;
     width: 200px;
     height: 60px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(249, 229, 89, 0.15);
     border-radius: 100px;
     animation: moveCloud 60s linear infinite;
     z-index: -1;
@@ -536,8 +693,9 @@
   .cloud:before, .cloud:after {
     content: '';
     position: absolute;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(249, 229, 89, 0.15);
     border-radius: 50%;
+    box-shadow: 0 0 10px rgba(249, 229, 89, 0.2);
   }
   
   .cloud:before {
@@ -588,7 +746,7 @@
   }
   
   body.light .cloud, body.light .cloud:before, body.light .cloud:after {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(249, 229, 89, 0.2);
   }
 
   @keyframes moveCloud {
@@ -646,7 +804,6 @@
   <div class="container">
     <div class="header-content">
       <div class="logo">
-        <img src="assets/logo.svg" alt="Nova Orion Logo" width="40" height="40">
         <h1 id="company-name">Nova Orion</h1>
       </div>
       
@@ -684,10 +841,10 @@
 
 <section class="hero">
   <div class="container">
-    <h1 id="hero-title">Mobile App Development Solutions</h1>
-    <p id="hero-desc">We create innovative, user-friendly mobile applications that enhance your daily life.</p>
+    <h1 id="hero-title">Stellar Mobile App Solutions</h1>
+    <p id="hero-desc">We create innovative, user-friendly mobile applications that enhance your daily life. Experience the cosmos in your pocket.</p>
     <div class="button-container">
-      <a href="#apps" class="btn" id="hero-btn">Explore Our Apps</a>
+      <a href="#apps" class="btn" id="hero-btn">Explore Our Universe</a>
     </div>
   </div>
 </section>
@@ -695,8 +852,8 @@
 <section id="apps" class="section">
   <div class="container">
     <div class="section-header">
-      <h2 id="apps-title">Our Applications</h2>
-      <p id="apps-desc">Discover our range of mobile applications designed to make your life easier.</p>
+      <h2 id="apps-title">Our Stellar Applications</h2>
+      <p id="apps-desc">Discover our constellation of mobile applications designed to make your life easier.</p>
     </div>
     
     <div class="apps-grid">
@@ -733,14 +890,14 @@
 <section id="features" class="section">
   <div class="container">
     <div class="section-header">
-      <h2 id="features-title">Why Choose Our Apps</h2>
-      <p id="features-desc">Our applications are designed with user experience and functionality in mind.</p>
+      <h2 id="features-title">Why Choose Our Cosmic Apps</h2>
+      <p id="features-desc">Our applications are designed with user experience and functionality in mind, bringing stellar quality to your device.</p>
     </div>
     
     <div class="features">
       <div class="feature-item">
-        <div class="feature-icon">🎨</div>
-        <h3 id="feature1-title">Modern Design</h3>
+        <div class="feature-icon">✨</div>
+        <h3 id="feature1-title">Celestial Design</h3>
         <p id="feature1-desc">Clean, intuitive interfaces that make our apps a pleasure to use.</p>
       </div>
       
@@ -752,7 +909,7 @@
       
       <div class="feature-item">
         <div class="feature-icon">🚀</div>
-        <h3 id="feature3-title">Performance</h3>
+        <h3 id="feature3-title">Light-Speed Performance</h3>
         <p id="feature3-desc">Optimized for speed and efficiency, even on older devices.</p>
       </div>
     </div>
@@ -765,8 +922,8 @@
       <h2 id="about-title">About Nova Orion</h2>
     </div>
     <div class="about-content">
-      <p id="about-desc1">Nova Orion is a mobile app development company dedicated to creating innovative solutions. Our vision is to produce modern, user-friendly, and reliable applications.</p>
-      <p id="about-desc2">Our mission is to always provide quality mobile experiences that make our users' lives easier.</p>
+      <p id="about-desc1">Nova Orion is a mobile app development company dedicated to creating innovative solutions. Like a nova that suddenly brightens the cosmos, we bring brilliant ideas to life. Named after the mighty constellation Orion, we guide users through the vast universe of mobile technology.</p>
+      <p id="about-desc2">Our mission is to always provide quality mobile experiences that make our users' lives easier, connecting them to the digital cosmos through our applications.</p>
     </div>
   </div>
 </section>
@@ -774,8 +931,8 @@
 <section id="contact" class="section">
   <div class="container">
     <div class="section-header">
-      <h2 id="contact-title">Contact Us</h2>
-      <p id="contact-desc">Have questions or suggestions? We'd love to hear from you!</p>
+      <h2 id="contact-title">Reach Out to Our Galaxy</h2>
+      <p id="contact-desc">Have questions or suggestions? We'd love to hear from you across the cosmic void!</p>
     </div>
     
     <div class="contact-info">
@@ -802,27 +959,27 @@
       navFeatures: "Features",
       navAbout: "About",
       navContact: "Contact",
-      heroTitle: "Mobile App Development Solutions",
-      heroDesc: "We create innovative, user-friendly mobile applications that enhance your daily life.",
-      heroBtn: "Explore Our Apps",
-      appsTitle: "Our Applications",
-      appsDesc: "Discover our range of mobile applications designed to make your life easier.",
+      heroTitle: "Stellar Mobile App Solutions",
+      heroDesc: "We create innovative, user-friendly mobile applications that enhance your daily life. Experience the cosmos in your pocket.",
+      heroBtn: "Explore Our Universe",
+      appsTitle: "Our Stellar Applications",
+      appsDesc: "Discover our constellation of mobile applications designed to make your life easier.",
       app1Desc: "Modern weather application with 5-day forecast, animated icons and mini-games.",
       app2Desc: "An app that allows you to easily manage your phone's volume controls.",
       app3Desc: "Fast and easy-to-use advanced calculator application.",
-      featuresTitle: "Why Choose Our Apps",
-      featuresDesc: "Our applications are designed with user experience and functionality in mind.",
-      feature1Title: "Modern Design",
+      featuresTitle: "Why Choose Our Cosmic Apps",
+      featuresDesc: "Our applications are designed with user experience and functionality in mind, bringing stellar quality to your device.",
+      feature1Title: "Celestial Design",
       feature1Desc: "Clean, intuitive interfaces that make our apps a pleasure to use.",
       feature2Title: "Security First",
       feature2Desc: "Your data privacy and security are our top priorities.",
-      feature3Title: "Performance",
+      feature3Title: "Light-Speed Performance",
       feature3Desc: "Optimized for speed and efficiency, even on older devices.",
       aboutTitle: "About Nova Orion",
-      aboutDesc1: "Nova Orion is a mobile app development company dedicated to creating innovative solutions. Our vision is to produce modern, user-friendly, and reliable applications.",
-      aboutDesc2: "Our mission is to always provide quality mobile experiences that make our users' lives easier.",
-      contactTitle: "Contact Us",
-      contactDesc: "Have questions or suggestions? We'd love to hear from you!",
+      aboutDesc1: "Nova Orion is a mobile app development company dedicated to creating innovative solutions. Like a nova that suddenly brightens the cosmos, we bring brilliant ideas to life. Named after the mighty constellation Orion, we guide users through the vast universe of mobile technology.",
+      aboutDesc2: "Our mission is to always provide quality mobile experiences that make our users' lives easier, connecting them to the digital cosmos through our applications.",
+      contactTitle: "Reach Out to Our Galaxy",
+      contactDesc: "Have questions or suggestions? We'd love to hear from you across the cosmic void!",
       contactEmail: "Email: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. All rights reserved.",
       appAdsLink: "App-ads.txt"
@@ -833,27 +990,27 @@
       navFeatures: "Özellikler",
       navAbout: "Hakkımızda",
       navContact: "İletişim",
-      heroTitle: "Mobil Uygulama Geliştirme Çözümleri",
-      heroDesc: "Günlük hayatınızı kolaylaştıracak yenilikçi, kullanıcı dostu mobil uygulamalar geliştiriyoruz.",
-      heroBtn: "Uygulamalarımızı Keşfedin",
-      appsTitle: "Uygulamalarımız",
-      appsDesc: "Hayatınızı kolaylaştırmak için tasarlanmış mobil uygulama yelpazemizi keşfedin.",
+      heroTitle: "Yıldızlararası Mobil Uygulama Çözümleri",
+      heroDesc: "Günlük hayatınızı kolaylaştıracak yenilikçi, kullanıcı dostu mobil uygulamalar geliştiriyoruz. Cebinizdeki kozmosu deneyimleyin.",
+      heroBtn: "Evrenimizi Keşfedin",
+      appsTitle: "Yıldızlararası Uygulamalarımız",
+      appsDesc: "Hayatınızı kolaylaştırmak için tasarlanmış mobil uygulama takımızı keşfedin.",
       app1Desc: "5 günlük tahmin, animasyonlu simgeler ve mini oyunlar içeren modern hava durumu uygulaması.",
       app2Desc: "Telefonunuzun ses kontrollerini kolayca yönetmenizi sağlayan uygulama.",
       app3Desc: "Hızlı ve kullanımı kolay gelişmiş hesap makinesi uygulaması.",
-      featuresTitle: "Neden Uygulamalarımızı Seçmelisiniz",
-      featuresDesc: "Uygulamalarımız kullanıcı deneyimi ve işlevsellik göz önünde bulundurularak tasarlanmıştır.",
-      feature1Title: "Modern Tasarım",
+      featuresTitle: "Neden Kozmik Uygulamalarımızı Seçmelisiniz",
+      featuresDesc: "Uygulamalarımız kullanıcı deneyimi ve işlevsellik göz önünde bulundurularak tasarlanmıştır, cihazınıza yıldız kalitesi getirir.",
+      feature1Title: "Göktaşları Tasarımı",
       feature1Desc: "Uygulamalarımızı kullanmayı keyifli hale getiren temiz, sezgisel arayüzler.",
       feature2Title: "Güvenlik Öncelikli",
       feature2Desc: "Veri gizliliğiniz ve güvenliğiniz önceliklerimizdir.",
-      feature3Title: "Performans",
+      feature3Title: "Işık Hızı Performansı",
       feature3Desc: "Eski cihazlarda bile hız ve verimlilik için optimize edilmiştir.",
       aboutTitle: "Nova Orion Hakkında",
-      aboutDesc1: "Nova Orion, yenilikçi çözümler üreten bir mobil uygulama geliştirme şirketidir. Vizyonumuz modern, kullanıcı dostu ve güvenilir uygulamalar üretmektir.",
-      aboutDesc2: "Misyonumuz, kullanıcılarımızın hayatını kolaylaştıracak kaliteli mobil deneyimler sunmaktır.",
-      contactTitle: "İletişim",
-      contactDesc: "Sorularınız veya önerileriniz mi var? Sizden haber almaktan memnuniyet duyarız!",
+      aboutDesc1: "Nova Orion, yenilikçi çözümler üreten bir mobil uygulama geliştirme şirketidir. Kozmosu aniden aydınlatan bir nova gibi, parlak fikirleri hayata geçiriyoruz. Güçlü Orion takımyıldızının adını taşıyan şirketimiz, kullanıcıları mobil teknolojinin uçsuz bucaksız evreninde yönlendiriyor.",
+      aboutDesc2: "Misyonumuz, kullanıcılarımızın hayatını kolaylaştıracak kaliteli mobil deneyimler sunmak ve onları uygulamalarımız aracılığıyla dijital kozmosa bağlamaktır.",
+      contactTitle: "Galaksimize Ulaşın",
+      contactDesc: "Sorularınız veya önerileriniz mi var? Kozmik boşluk boyunca sizden haber almak isteriz!",
       contactEmail: "E-posta: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. Tüm hakları saklıdır.",
       appAdsLink: "App-ads.txt"
@@ -864,27 +1021,27 @@
       navFeatures: "Funktionen",
       navAbout: "Über uns",
       navContact: "Kontakt",
-      heroTitle: "Mobile App-Entwicklungslösungen",
-      heroDesc: "Wir erstellen innovative, benutzerfreundliche mobile Anwendungen, die Ihren Alltag bereichern.",
-      heroBtn: "Entdecken Sie unsere Apps",
-      appsTitle: "Unsere Anwendungen",
-      appsDesc: "Entdecken Sie unsere Palette an mobilen Anwendungen, die Ihr Leben erleichtern sollen.",
+      heroTitle: "Stellare Mobile App Lösungen",
+      heroDesc: "Wir erstellen innovative, benutzerfreundliche mobile Anwendungen, die Ihren Alltag bereichern. Erleben Sie den Kosmos in Ihrer Tasche.",
+      heroBtn: "Entdecken Sie unser Universum",
+      appsTitle: "Unsere stellaren Anwendungen",
+      appsDesc: "Entdecken Sie unser Sternbild mobiler Anwendungen, die Ihr Leben erleichtern sollen.",
       app1Desc: "Moderne Wetter-App mit 5-Tage-Vorhersage, animierten Symbolen und Minispielen.",
       app2Desc: "Eine App, mit der Sie die Lautstärkeregler Ihres Telefons einfach verwalten können.",
       app3Desc: "Schnelle und einfach zu bedienende erweiterte Taschenrechner-Anwendung.",
-      featuresTitle: "Warum Sie unsere Apps wählen sollten",
-      featuresDesc: "Unsere Anwendungen sind im Hinblick auf Benutzererfahrung und Funktionalität konzipiert.",
-      feature1Title: "Modernes Design",
+      featuresTitle: "Warum Sie unsere kosmischen Apps wählen sollten",
+      featuresDesc: "Unsere Anwendungen sind im Hinblick auf Benutzererfahrung und Funktionalität konzipiert und bieten Ihrem Gerät eine stellare Qualität.",
+      feature1Title: "Himmlisches Design",
       feature1Desc: "Klare, intuitive Schnittstellen, die unsere Apps zu einem Vergnügen machen.",
       feature2Title: "Sicherheit an erster Stelle",
       feature2Desc: "Ihre Datenschutz und Sicherheit haben für uns oberste Priorität.",
-      feature3Title: "Leistung",
+      feature3Title: "Lichtgeschwindigkeits-Performance",
       feature3Desc: "Optimiert für Geschwindigkeit und Effizienz, auch auf älteren Geräten.",
       aboutTitle: "Über Nova Orion",
-      aboutDesc1: "Nova Orion ist ein Unternehmen für die Entwicklung mobiler Apps, das sich der Schaffung innovativer Lösungen verschrieben hat. Unsere Vision ist es, moderne, benutzerfreundliche und zuverlässige Anwendungen zu produzieren.",
-      aboutDesc2: "Unsere Mission ist es, stets qualitativ hochwertige mobile Erfahrungen zu bieten, die das Leben unserer Benutzer erleichtern.",
-      contactTitle: "Kontaktieren Sie uns",
-      contactDesc: "Haben Sie Fragen oder Anregungen? Wir würden gerne von Ihnen hören!",
+      aboutDesc1: "Nova Orion ist ein Unternehmen für die Entwicklung mobiler Apps, das sich der Schaffung innovativer Lösungen verschrieben hat. Wie eine Nova, die den Kosmos plötzlich erhellt, bringen wir brillante Ideen zum Leben. Benannt nach dem mächtigen Sternbild Orion führen wir Benutzer durch das riesige Universum der Mobiltechnologie.",
+      aboutDesc2: "Unsere Mission ist es, stets qualitativ hochwertige mobile Erfahrungen zu bieten, die das Leben unserer Benutzer erleichtern und sie über unsere Anwendungen mit dem digitalen Kosmos verbinden.",
+      contactTitle: "Erreichen Sie unsere Galaxie",
+      contactDesc: "Haben Sie Fragen oder Anregungen? Wir würden gerne von Ihnen über den kosmischen Abgrund hinweg hören!",
       contactEmail: "E-Mail: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. Alle Rechte vorbehalten.",
       appAdsLink: "App-ads.txt"
@@ -895,27 +1052,27 @@
       navFeatures: "特徴",
       navAbout: "会社概要",
       navContact: "お問い合わせ",
-      heroTitle: "モバイルアプリ開発ソリューション",
-      heroDesc: "日常生活を豊かにする革新的でユーザーフレンドリーなモバイルアプリケーションを開発しています。",
-      heroBtn: "アプリを探索する",
-      appsTitle: "私たちのアプリケーション",
-      appsDesc: "あなたの生活を楽にするためにデザインされたモバイルアプリケーションの範囲を発見してください。",
+      heroTitle: "スターリー・モバイルアプリ・ソリューション",
+      heroDesc: "日常生活を豊かにする革新的でユーザーフレンドリーなモバイルアプリケーションを開発しています。ポケットの中で宇宙を体験してください。",
+      heroBtn: "私たちの宇宙を探索する",
+      appsTitle: "私たちのスターリーアプリケーション",
+      appsDesc: "あなたの生活を楽にするためにデザインされたモバイルアプリケーションの星座を発見してください。",
       app1Desc: "5日間の予報、アニメーションアイコン、ミニゲームを備えたモダンな天気アプリ。",
       app2Desc: "電話の音量コントロールを簡単に管理できるアプリ。",
       app3Desc: "高速で使いやすい高度な計算機アプリケーション。",
-      featuresTitle: "なぜ私たちのアプリを選ぶべきか",
-      featuresDesc: "私たちのアプリケーションはユーザー体験と機能性を念頭に置いて設計されています。",
-      feature1Title: "モダンデザイン",
+      featuresTitle: "なぜ私たちのコズミックアプリを選ぶべきか",
+      featuresDesc: "私たちのアプリケーションは、ユーザー体験と機能性を念頭に置いて設計されており、デバイスにもスターリー品質をもたらします。",
+      feature1Title: "天体デザイン",
       feature1Desc: "アプリを使う喜びをもたらすクリーンで直感的なインターフェース。",
       feature2Title: "セキュリティ第一",
       feature2Desc: "あなたのデータプライバシーとセキュリティは私たちの最優先事項です。",
-      feature3Title: "パフォーマンス",
+      feature3Title: "光速パフォーマンス",
       feature3Desc: "古いデバイスでも速度と効率性のために最適化。",
       aboutTitle: "Nova Orionについて",
-      aboutDesc1: "Nova Orionは革新的なソリューション創造に専念するモバイルアプリ開発会社です。私たちのビジョンは、現代的、ユーザーフレンドリー、そして信頼性の高いアプリケーションを製造することです。",
-      aboutDesc2: "私たちの使命は、常にユーザーの生活を楽にする質の高いモバイル体験を提供することです。",
-      contactTitle: "お問い合わせ",
-      contactDesc: "ご質問やご提案がありますか？ぜひお聞かせください！",
+      aboutDesc1: "Nova Orionは革新的なソリューション創造に専念するモバイルアプリ開発会社です。突如として宇宙を明るく照らす新星のように、私たちは輝かしいアイデアを現実にします。力強いオリオン座の名を冠し、私たちはユーザーをモバイルテクノロジーの広大な宇宙に導きます。",
+      aboutDesc2: "私たちの使命は、常にユーザーの生活を楽にする質の高いモバイル体験を提供し、私たちのアプリケーションを通じてデジタル宇宙に接続することです。",
+      contactTitle: "私たちの銀河に連絡を",
+      contactDesc: "ご質問やご提案がありますか？宇宙の虚空を越えてぜひお聞かせください！",
       contactEmail: "メール: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. 全著作権所有。",
       appAdsLink: "App-ads.txt"
@@ -926,27 +1083,27 @@
       navFeatures: "Recursos",
       navAbout: "Sobre",
       navContact: "Contato",
-      heroTitle: "Soluções de Desenvolvimento de Aplicativos Móveis",
-      heroDesc: "Criamos aplicativos móveis inovadores e amigáveis que melhoram seu dia a dia.",
-      heroBtn: "Explore Nossos Aplicativos",
-      appsTitle: "Nossos Aplicativos",
-      appsDesc: "Descubra nossa gama de aplicativos móveis projetados para facilitar sua vida.",
+      heroTitle: "Soluções Estelares de Aplicativos Móveis",
+      heroDesc: "Criamos aplicativos móveis inovadores e amigáveis que melhoram seu dia a dia. Experimente o cosmos no seu bolso.",
+      heroBtn: "Explore Nosso Universo",
+      appsTitle: "Nossos Aplicativos Estelares",
+      appsDesc: "Descubra nossa constelação de aplicativos móveis projetados para facilitar sua vida.",
       app1Desc: "Aplicativo de clima moderno com previsão de 5 dias, ícones animados e mini-jogos.",
       app2Desc: "Um aplicativo que permite gerenciar facilmente os controles de volume do seu telefone.",
       app3Desc: "Aplicativo de calculadora avançada rápido e fácil de usar.",
-      featuresTitle: "Por Que Escolher Nossos Aplicativos",
-      featuresDesc: "Nossos aplicativos são projetados com experiência do usuário e funcionalidade em mente.",
-      feature1Title: "Design Moderno",
+      featuresTitle: "Por Que Escolher Nossos Aplicativos Cósmicos",
+      featuresDesc: "Nossos aplicativos são projetados com experiência do usuário e funcionalidade em mente, trazendo qualidade estelar ao seu dispositivo.",
+      feature1Title: "Design Celestial",
       feature1Desc: "Interfaces limpas e intuitivas que tornam nossos aplicativos um prazer de usar.",
       feature2Title: "Segurança em Primeiro Lugar",
       feature2Desc: "Sua privacidade e segurança de dados são nossas principais prioridades.",
-      feature3Title: "Desempenho",
+      feature3Title: "Desempenho na Velocidade da Luz",
       feature3Desc: "Otimizado para velocidade e eficiência, mesmo em dispositivos mais antigos.",
       aboutTitle: "Sobre a Nova Orion",
-      aboutDesc1: "A Nova Orion é uma empresa de desenvolvimento de aplicativos móveis dedicada a criar soluções inovadoras. Nossa visão é produzir aplicativos modernos, amigáveis e confiáveis.",
-      aboutDesc2: "Nossa missão é sempre fornecer experiências móveis de qualidade que facilitem a vida de nossos usuários.",
-      contactTitle: "Entre em Contato",
-      contactDesc: "Tem perguntas ou sugestões? Adoraríamos ouvir de você!",
+      aboutDesc1: "A Nova Orion é uma empresa de desenvolvimento de aplicativos móveis dedicada a criar soluções inovadoras. Como uma nova que de repente ilumina o cosmos, damos vida a ideias brilhantes. Nomeada após a poderosa constelação de Orion, guiando os usuários através do vasto universo da tecnologia móvel.",
+      aboutDesc2: "Nossa missão é sempre fornecer experiências móveis de qualidade que facilitem a vida de nossos usuários, conectando-os ao cosmos digital através de nossos aplicativos.",
+      contactTitle: "Entre em Contato com Nossa Galáxia",
+      contactDesc: "Tem perguntas ou sugestões? Adoraríamos ouvir de você através do vazio cósmico!",
       contactEmail: "Email: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. Todos os direitos reservados.",
       appAdsLink: "App-ads.txt"
