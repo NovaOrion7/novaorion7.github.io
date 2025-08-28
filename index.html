@@ -115,8 +115,7 @@
   header {
     background: rgba(0, 0, 0, 0.3);
     padding: 20px 0;
-    position: sticky;
-    top: 0;
+    position: static;
     z-index: 1000;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -1121,6 +1120,94 @@ body.light .hero p {
     }
   }
 
+  /* Scroll to top button */
+  .scroll-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 80px;
+    height: auto;
+    padding: 10px 5px;
+    border-radius: 30px;
+    background: rgba(15, 12, 41, 0.7);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(249, 229, 89, 0.5);
+    animation: btnPulse 2s infinite;
+  }
+  
+  .scroll-text {
+    font-size: 0.7rem;
+    margin-top: 5px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1;
+  }
+  
+  .scroll-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .scroll-top-btn:hover {
+    background: rgba(15, 12, 41, 0.9);
+    box-shadow: 0 0 20px rgba(249, 229, 89, 0.8);
+    transform: translateY(-5px);
+  }
+  
+  .scroll-icon {
+    display: inline-block;
+    animation: rocketFloat 2s ease-in-out infinite;
+  }
+  
+  @keyframes rocketFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  
+  @keyframes btnPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(249, 229, 89, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(249, 229, 89, 0.8); }
+  }
+  
+  body.light .scroll-top-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #6a82fb;
+    color: #6a82fb;
+    box-shadow: 0 0 15px rgba(106, 130, 251, 0.5);
+  }
+  
+  body.light .scroll-top-btn:hover {
+    background: white;
+    box-shadow: 0 0 20px rgba(106, 130, 251, 0.8);
+  }
+  
+  @media (max-width: 768px) {
+    .scroll-top-btn {
+      width: 70px;
+      bottom: 20px;
+      right: 20px;
+      font-size: 1.3rem;
+      padding: 8px 5px;
+    }
+    
+    .scroll-text {
+      font-size: 0.65rem;
+    }
+  }
+
   /* Optimize constellation effect for mobile */
   @media (max-width: 768px) {
     /* Reduce constellation points and animation complexity */
@@ -1338,6 +1425,12 @@ body.light .hero p {
   </div>
 </footer>
 
+<!-- Scroll to top button -->
+<button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
+  <span class="scroll-icon">🚀</span>
+  <span class="scroll-text" id="scroll-text">Go to top</span>
+</button>
+
 <script>
   // Language support
   const texts = {
@@ -1370,7 +1463,8 @@ body.light .hero p {
       contactDesc: "Have questions or suggestions? We'd love to hear from you across the cosmic void!",
       contactEmail: "Email: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. All rights reserved.",
-      appAdsLink: "App-ads.txt"
+      appAdsLink: "App-ads.txt",
+      scrollTopText: "Go to top"
     },
     tr: {
       companyName: "Nova Orion",
@@ -1401,7 +1495,8 @@ body.light .hero p {
       contactDesc: "Sorularınız veya önerileriniz mi var? Kozmik boşluk boyunca sizden haber almak isteriz!",
       contactEmail: "E-posta: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. Tüm hakları saklıdır.",
-      appAdsLink: "App-ads.txt"
+      appAdsLink: "App-ads.txt",
+      scrollTopText: "Yukarı Çık"
     },
     de: {
       companyName: "Nova Orion",
@@ -1432,7 +1527,8 @@ body.light .hero p {
       contactDesc: "Haben Sie Fragen oder Anregungen? Wir würden gerne von Ihnen über den kosmischen Abgrund hinweg hören!",
       contactEmail: "E-Mail: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. Alle Rechte vorbehalten.",
-      appAdsLink: "App-ads.txt"
+      appAdsLink: "App-ads.txt",
+      scrollTopText: "Nach oben"
     },
     ja: {
       companyName: "Nova Orion",
@@ -1463,7 +1559,8 @@ body.light .hero p {
       contactDesc: "ご質問やご提案がありますか？宇宙の虚空を越えてぜひお聞かせください！",
       contactEmail: "メール: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. 全著作権所有。",
-      appAdsLink: "App-ads.txt"
+      appAdsLink: "App-ads.txt",
+      scrollTopText: "トップへ"
     },
     pt: {
       companyName: "Nova Orion",
@@ -1494,11 +1591,33 @@ body.light .hero p {
       contactDesc: "Tem perguntas ou sugestões? Adoraríamos ouvir de você através do vazio cósmico!",
       contactEmail: "Email: <strong>nova.orion.dev@gmail.com</strong>",
       footerText: "© 2025 Nova Orion. Todos os direitos reservados.",
-      appAdsLink: "App-ads.txt"
+      appAdsLink: "App-ads.txt",
+      scrollTopText: "Voltar ao topo"
     }
   };
 
   document.addEventListener('DOMContentLoaded', function() {
+    // Scroll to top button functionality
+    const scrollTopBtn = document.getElementById('scroll-top-btn');
+    
+    // Show button when user scrolls down 500px
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 500) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+    
+    // Scroll to top when button is clicked
+    scrollTopBtn.addEventListener('click', function() {
+      // Smooth scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
     // Language button functionality
     const langButtons = document.querySelectorAll('.lang-btn');
     
@@ -1635,6 +1754,9 @@ body.light .hero p {
     
     document.getElementById('footer-text').textContent = texts[lang].footerText;
     document.getElementById('app-ads-link').textContent = texts[lang].appAdsLink;
+    
+    // Update scroll to top button text
+    document.getElementById('scroll-text').textContent = texts[lang].scrollTopText;
     
     // Save the current language preference
     localStorage.setItem('preferred-language', lang);
