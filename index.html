@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Nova Orion - Mobile Applications</title>
 
 <!-- Google Fonts -->
@@ -1119,6 +1120,60 @@ body.light .hero p {
       justify-content: center;
     }
   }
+
+  /* Optimize constellation effect for mobile */
+  @media (max-width: 768px) {
+    /* Reduce constellation points and animation complexity */
+    .constellation-point {
+      display: none;
+    }
+    
+    .constellation-line {
+      display: none;
+    }
+    
+    /* Reduce cloud animation complexity */
+    .cloud {
+      filter: blur(2px);
+      animation-duration: 120s !important;
+    }
+    
+    /* Disable intensive animations */
+    .shooting-star {
+      display: none;
+    }
+    
+    /* Simplify animations for better performance */
+    @keyframes logoGlow {
+      from { filter: none; }
+      to { filter: drop-shadow(0 0 5px rgba(249, 229, 89, 0.5)); }
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 2px rgba(249, 229, 89, 0.3); }
+      to { text-shadow: 0 0 10px rgba(249, 229, 89, 0.5); }
+    }
+    
+    /* Reduce animation complexity */
+    .feature-item, .app-card, .contact-info {
+      animation: none !important;
+      transform: none !important;
+    }
+    
+    .feature-icon {
+      animation: none !important;
+    }
+    
+    /* Simplify hero effects */
+    .hero::before {
+      opacity: 0.2;
+      background-size: 600px 300px;
+    }
+    
+    body.light .hero h1::before {
+      box-shadow: 0 2px 8px rgba(10, 21, 80, 0.2);
+    }
+  }
 </style>
 </head>
 <body class="dark">
@@ -1128,12 +1183,7 @@ body.light .hero p {
 <div class="cloud"></div>
 <div class="cloud"></div>
 
-<!-- Shooting Stars -->
-<div class="shooting-star" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
-<div class="shooting-star" style="top: 40%; left: 80%; animation-delay: 2s;"></div>
-<div class="shooting-star" style="top: 70%; left: 30%; animation-delay: 4s;"></div>
-
-<!-- Constellation effect -->
+<!-- Constellation effect (will be created by JS) -->
 <div class="constellation" id="constellation"></div>
 
 <header>
@@ -1513,9 +1563,39 @@ body.light .hero p {
       }
     });
     
-    // Create constellation effect
-    createConstellation();
+    // Check if device is mobile before initializing heavy animations
+    const isMobile = window.innerWidth <= 768;
+    
+    // Initialize constellation with a slight delay to improve initial page load
+    setTimeout(() => {
+      createConstellation();
+    }, isMobile ? 1000 : 300);
+    
+    // Only add shooting stars on desktop
+    if (!isMobile) {
+      createShootingStars();
+    }
   });
+
+  // Function to create shooting stars dynamically (only on desktop)
+  function createShootingStars() {
+    const container = document.body;
+    const starCount = 3;
+    
+    // Remove any existing shooting stars
+    const existingStars = document.querySelectorAll('.shooting-star');
+    existingStars.forEach(star => star.remove());
+    
+    // Create new shooting stars
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'shooting-star';
+      star.style.top = `${20 + (i * 20)}%`;
+      star.style.left = `${10 + (i * 30)}%`;
+      star.style.animationDelay = `${i * 2}s`;
+      container.appendChild(star);
+    }
+  }
   
   // Function to change language
   function changeLanguage(lang) {
@@ -1566,7 +1646,23 @@ body.light .hero p {
     const points = [];
     const lines = [];
     
-    // Create constellation points
+    // Check if we're on mobile
+    const isMobile = window.innerWidth <= 768;
+    
+    // If on mobile, reduce the number of points or skip constellation
+    if (isMobile) {
+      // Just add a few static points for visual effect but don't animate
+      for (let i = 0; i < 5; i++) {
+        const point = document.createElement('div');
+        point.className = 'constellation-point';
+        point.style.left = (10 + (i * 20)) + '%';
+        point.style.top = (10 + (i * 15)) + '%';
+        constellation.appendChild(point);
+      }
+      return; // Skip the animation on mobile
+    }
+    
+    // Desktop code - create full constellation
     for (let i = 0; i < 20; i++) {
       const point = document.createElement('div');
       point.className = 'constellation-point';
@@ -1609,23 +1705,31 @@ body.light .hero p {
     
     connectPoints();
     
-    // Animate constellation
+    // Animate constellation with requestAnimationFrame for better performance
     let time = 0;
-    function animateConstellation() {
-      time += 0.01;
-      points.forEach((point, index) => {
-        const x = parseFloat(point.style.left);
-        const y = parseFloat(point.style.top);
-        const newX = x + Math.sin(time + index) * 0.02;
-        const newY = y + Math.cos(time + index) * 0.02;
-        point.style.left = newX + '%';
-        point.style.top = newY + '%';
-      });
-      connectPoints();
+    let lastTimestamp = 0;
+  
+    function animateConstellation(timestamp) {
+      // Only update animation every 50ms for better performance
+      if (timestamp - lastTimestamp > 50) {
+        lastTimestamp = timestamp;
+        time += 0.01;
+        points.forEach((point, index) => {
+          const x = parseFloat(point.style.left);
+          const y = parseFloat(point.style.top);
+          // Reduce movement amount for better performance
+          const newX = x + Math.sin(time + index) * 0.01;
+          const newY = y + Math.cos(time + index) * 0.01;
+          point.style.left = newX + '%';
+          point.style.top = newY + '%';
+        });
+        connectPoints();
+      }
+      
       requestAnimationFrame(animateConstellation);
     }
     
-    animateConstellation();
+    requestAnimationFrame(animateConstellation);
   }
 </script>
 </body>
